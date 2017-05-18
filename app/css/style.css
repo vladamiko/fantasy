@@ -1,6 +1,4 @@
 body {
-    width: 100%;
-    height: 100%;
     display: flex;
     justify-content: center;
     font-family: Verdana, sans-serif;
@@ -56,7 +54,8 @@ body {
     border-radius: 5px;
 }
 
-.winner {
+.winner,
+.start-info {
     background-color: #F6D258;
     padding: 20px;
     margin: 20px auto;
