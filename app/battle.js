@@ -3,12 +3,14 @@
 function Battle (kingdomName, enemyName) {
     this.kingdom = new Kingdom(kingdomName);
     this.enemy = new Enemy(enemyName);
+    this.view = new View();
     this.fight = function () {
         let kingdomName = this.kingdom.name,
             enemyName = this.enemy.name,
-            count = 1;
+            count = 1,
+            that = this;
 
-        createStartInfo(kingdomName, this.kingdom.elf.health, enemyName, this.enemy.health);
+        this.view.createStartInfo(kingdomName, this.kingdom.elf.health, enemyName, this.enemy.health);
 
         while (this.isAlive()) {
             let kingdomPower = this.kingdom.attack(),
@@ -23,7 +25,7 @@ function Battle (kingdomName, enemyName) {
 
             this.enemy.defend(kingdomPower);
             paramsAttackElement.targetHealth = this.enemy.health;
-            doDeferredTimeout(paramsAttackElement);
+            this.view.doDeferredTimeout(paramsAttackElement);
             count++;
 
             if (this.enemy.isAlive()) {
@@ -39,18 +41,18 @@ function Battle (kingdomName, enemyName) {
 
                 this.kingdom.defend(enemyPower);
                 paramsAttackElement.targetHealth = this.kingdom.elf.health;
-                doDeferredTimeout(paramsAttackElement);
+                this.view.doDeferredTimeout(paramsAttackElement);
                 count++;
             }
         }
 
         if (this.enemy.isAlive()) {
             setTimeout(function() {
-                createWinnerElement(enemyName, 'winner2');
+                that.view.createWinnerElement(enemyName, 'winner2');
             }, count*750);
         } else {
             setTimeout(function() {
-                createWinnerElement(kingdomName, 'winner1');
+                that.view.createWinnerElement(kingdomName, 'winner1');
             }, count*750);
         }
     };
@@ -59,4 +61,3 @@ function Battle (kingdomName, enemyName) {
         return (this.enemy.isAlive() && this.kingdom.isAlive()) ? true : false;
     };
 }
-
