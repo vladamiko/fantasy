@@ -1,6 +1,8 @@
 body {
     display: flex;
     justify-content: center;
+    flex-direction: column;
+    align-items: center;
     font-family: Verdana, sans-serif;
     font-size: 16px;
 }
@@ -15,15 +17,13 @@ body {
 }
 
 #button-start {
-    align-self: center;
     font-family: inherit;
-    text-align: inherit;
+    text-align: center;
     font-size: inherit;
     background-color: #97D5E0;
     border: none;
     border-radius: 5px;
-    width: 25%;
-    padding: 20px;
+    padding: 20px 40px;
 }
 
 .kingdom-attack,

@@ -40,4 +40,12 @@ function View () {
         divWinner.classList.add('winner');
         imgWinner[0].classList.add('img-winner');
     };
+
+    this.clearView = function () {
+        let maincontent = document.getElementById('main-content');
+
+        while (maincontent.firstChild) {
+            maincontent.removeChild(maincontent.firstChild);
+        }
+    }
 }

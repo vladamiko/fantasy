@@ -4,14 +4,15 @@ function Battle (kingdomName, enemyName) {
     this.kingdom = new Kingdom(kingdomName);
     this.enemy = new Enemy(enemyName);
     this.view = new View();
-    this.fight = function () {
+    this.isActive = false;
+    this.fight = function (callback) {
         let kingdomName = this.kingdom.name,
             enemyName = this.enemy.name,
             count = 1,
             that = this;
 
         this.view.createStartInfo(kingdomName, this.kingdom.elf.health, enemyName, this.enemy.health);
-
+        
         while (this.isAlive()) {
             let kingdomPower = this.kingdom.attack(),
                 kingdomHealth = this.kingdom.elf.health,
@@ -49,12 +50,15 @@ function Battle (kingdomName, enemyName) {
         if (this.enemy.isAlive()) {
             setTimeout(function() {
                 that.view.createWinnerElement(enemyName, 'winner2');
+                callback();
             }, count*750);
         } else {
             setTimeout(function() {
                 that.view.createWinnerElement(kingdomName, 'winner1');
+                callback();
             }, count*750);
         }
+
     };
     
     this.isAlive = function () {

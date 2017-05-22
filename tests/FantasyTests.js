@@ -1,6 +1,9 @@
+let battle = new Battle('Hogwarts', 'Voldemort');
+
 QUnit.module( "group kingdom" );
 
 QUnit.test("kingdom.power = elf.power + orc.power + gnome.power", function( assert ) {
+
   assert.ok((battle.kingdom.attack() === (battle.kingdom.elf.power + battle.kingdom.orc.power + battle.kingdom.gnome.power)), "Yes!");
 });
 
