@@ -21,13 +21,6 @@ function View () {
             divHealth.classList.add('info');
     };
 
-    this.doDeferredTimeout = function (paramsAttackElement) {
-        let that = this;
-        setTimeout(function () {
-            that.createAttackElement(paramsAttackElement);
-        }, 750*paramsAttackElement.count);
-    };
-
     this.createWinnerElement = function (name, imageName) {
         let divWinner = document.createElement('div'),
             imgWinner = document.getElementsByTagName('img'),
@@ -47,5 +40,5 @@ function View () {
         while (maincontent.firstChild) {
             maincontent.removeChild(maincontent.firstChild);
         }
-    }
+    };
 }

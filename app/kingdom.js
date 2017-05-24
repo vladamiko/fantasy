@@ -6,9 +6,17 @@ function Kingdom (name) {
     this.orc = new Warrior('Hufflepuff');
     this.gnome = new Warrior('Ravenclaw');
 
+    this.getName = function () {
+        return this.name;
+    };
+
+    this.getHealth = function () {
+        return this.elf.getHealth();
+    };
+
     this.attack = function () {
         let power = this.elf.attack() + this.orc.attack() + this.gnome.attack();
-        console.log('The %o attacks with the power %o', this.name, power);
+        console.log('The %o attacks with the power %o', this.getName(), power);
         return power;
     };
 

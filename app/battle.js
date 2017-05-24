@@ -4,61 +4,65 @@ function Battle (kingdomName, enemyName) {
     this.kingdom = new Kingdom(kingdomName);
     this.enemy = new Enemy(enemyName);
     this.view = new View();
-    this.isActive = false;
+
+    this.kingdomAttack = function () {
+        let kingdomPower = this.kingdom.attack(),
+            kingdomHealth = this.kingdom.getHealth(),
+            paramsAttackElement = {
+                name: kingdomName,
+                targetName: enemyName,
+                power: kingdomPower,
+                className: 'kingdom-attack'
+            };
+        this.enemy.defend(kingdomPower);
+        paramsAttackElement.targetHealth = this.enemy.getHealth();
+        this.view.createAttackElement(paramsAttackElement);
+    };
+
+    this.enemyAttack = function () {
+        let enemyPower = this.enemy.attack(),
+            enemyHealth = this.enemy.getHealth(),
+            paramsAttackElement = {
+                name: enemyName,
+                targetName: kingdomName,
+                power: enemyPower,
+                className: 'enemy-attack'
+            };
+
+        this.kingdom.defend(enemyPower);
+        paramsAttackElement.targetHealth = this.kingdom.getHealth();
+        this.view.createAttackElement(paramsAttackElement);
+    };
+
     this.fight = function (callback) {
-        let kingdomName = this.kingdom.name,
-            enemyName = this.enemy.name,
-            count = 1,
-            that = this;
+        let kingdomName = this.kingdom.getName(),
+            enemyName = this.enemy.getName(),
+            kingdomHealth = this.kingdom.getHealth(),
+            enemyHealth = this.enemy.getHealth(),
+            flag = 'kingdom',
+            that = this,
+            fight;
 
-        this.view.createStartInfo(kingdomName, this.kingdom.elf.health, enemyName, this.enemy.health);
+        this.view.createStartInfo(kingdomName, kingdomHealth, enemyName, enemyHealth);
         
-        while (this.isAlive()) {
-            let kingdomPower = this.kingdom.attack(),
-                kingdomHealth = this.kingdom.elf.health,
-                paramsAttackElement = {
-                    name: kingdomName,
-                    targetName: enemyName,
-                    power: kingdomPower,
-                    className: 'kingdom-attack',
-                    count: count
-                };
-
-            this.enemy.defend(kingdomPower);
-            paramsAttackElement.targetHealth = this.enemy.health;
-            this.view.doDeferredTimeout(paramsAttackElement);
-            count++;
-
-            if (this.enemy.isAlive()) {
-                let enemyPower = this.enemy.attack(),
-                    enemyHealth = this.enemy.health,
-                    paramsAttackElement = {
-                    name: enemyName,
-                    targetName: kingdomName,
-                    power: enemyPower,
-                    className: 'enemy-attack',
-                    count: count
-                };
-
-                this.kingdom.defend(enemyPower);
-                paramsAttackElement.targetHealth = this.kingdom.elf.health;
-                this.view.doDeferredTimeout(paramsAttackElement);
-                count++;
+        fight = setInterval(function() {
+            if (flag === 'kingdom' && that.isAlive()) {
+                that.kingdomAttack();
+                flag = 'enemy';
+            } else if (that.isAlive()) {
+                that.enemyAttack();
+                flag = 'kingdom';
+            } else {
+                clearInterval(fight);
+                if (that.enemy.isAlive()) {
+                    that.view.createWinnerElement(enemyName, 'winner2');
+                    callback();
+                } else {
+                    that.view.createWinnerElement(kingdomName, 'winner1');
+                    callback();
+                }
             }
-        }
-
-        if (this.enemy.isAlive()) {
-            setTimeout(function() {
-                that.view.createWinnerElement(enemyName, 'winner2');
-                callback();
-            }, count*750);
-        } else {
-            setTimeout(function() {
-                that.view.createWinnerElement(kingdomName, 'winner1');
-                callback();
-            }, count*750);
-        }
-
+        }, 1000);
     };
     
     this.isAlive = function () {
