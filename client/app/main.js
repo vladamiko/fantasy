@@ -1,9 +1,9 @@
 'use strict'
 
-window.onload = function () {
+$(function () {
     getEnemy();
     refresh();
-};
+});
 
 function startBattle (enemyEntity) {
     let battle = new Battle('Kingdom', enemyEntity);
@@ -13,18 +13,13 @@ function startBattle (enemyEntity) {
 }
 
 function getEnemy () {
-    var xhr = new XMLHttpRequest();
-
-    xhr.open('GET', '/get-enemy', true);
-    xhr.addEventListener('readystatechange', function() {
-        if (xhr.readyState === 4) {
-            if (xhr.status === 200) {
-                let enemyEntity = JSON.parse(xhr.responseText);
-                startBattle(enemyEntity);
-            }
+    $.ajax({
+        url: '/get-enemy',
+        dataType : 'json',
+        success: function (enemyEntity) {
+            startBattle(enemyEntity);
         }
     });
-    xhr.send();
 }
 
 function refresh (name, power, health) {
