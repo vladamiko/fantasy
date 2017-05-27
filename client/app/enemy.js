@@ -1,8 +1,10 @@
 'use strict'
 
-function Enemy (name) {
-    this.name = name;
-    this.health = 500;
+function Enemy (enemyEntity) {
+    this.name = enemyEntity.name;
+    this.power = enemyEntity.power;
+    this.health = enemyEntity.health;
+    
     this.getName = function () {
         return this.name;
     };
@@ -11,12 +13,8 @@ function Enemy (name) {
         return this.health;
     };
 
-    this.powerRandom = Math.floor((Math.random() * (60 - 40 + 1) ) + 40);
-
     this.attack = function () {
-        let power = Math.floor(Math.random() * (this.powerRandom * 1.1 - this.powerRandom * 0.9 + 1) + this.powerRandom * 0.9);
-        console.log('The %o attacks with the power %o', this.getName(), power);
-        return power;
+        return this.power;
     };
 
     this.defend = function (kingdomPower) {

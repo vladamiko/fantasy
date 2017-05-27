@@ -2,9 +2,9 @@
 
 function Kingdom (name) {
     this.name = name;
-    this.elf = new Warrior('Gryffindor');
-    this.orc = new Warrior('Hufflepuff');
-    this.gnome = new Warrior('Ravenclaw');
+    this.elf = new Warrior('elf');
+    this.orc = new Warrior('orc');
+    this.gnome = new Warrior('gnome');
 
     this.getName = function () {
         return this.name;

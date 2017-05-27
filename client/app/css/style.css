@@ -17,17 +17,6 @@ body {
     text-align: center;
 }
 
-#button-start {
-    font-family: inherit;
-    text-align: center;
-    font-size: inherit;
-    background-color: #97D5E0;
-    border: none;
-    border-radius: 5px;
-    padding: 20px 40px;
-    margin: 20px 0;
-}
-
 .kingdom-attack,
 .enemy-attack {
     width: 40%;
@@ -61,9 +50,16 @@ body {
     background-color: #F6D258;
     padding: 20px;
     margin: 20px auto;
-    width: 40%;
     border: none;
     border-radius: 5px;
+}
+
+.winner {
+    width: 40%;
+}
+
+.start-info {
+    width: 60%;
 }
 
 .img-winner {

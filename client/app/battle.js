@@ -1,13 +1,14 @@
 'use strict'
 
-function Battle (kingdomName, enemyName) {
+function Battle (kingdomName, enemyEntity) {
     this.kingdom = new Kingdom(kingdomName);
-    this.enemy = new Enemy(enemyName);
+    this.enemy = new Enemy(enemyEntity);
     this.view = new View();
 
     this.kingdomAttack = function () {
         let kingdomPower = this.kingdom.attack(),
             kingdomHealth = this.kingdom.getHealth(),
+            enemyName = this.enemy.getName(),
             paramsAttackElement = {
                 name: kingdomName,
                 targetName: enemyName,
@@ -22,6 +23,7 @@ function Battle (kingdomName, enemyName) {
     this.enemyAttack = function () {
         let enemyPower = this.enemy.attack(),
             enemyHealth = this.enemy.getHealth(),
+            enemyName = this.enemy.getName(),
             paramsAttackElement = {
                 name: enemyName,
                 targetName: kingdomName,
@@ -34,7 +36,7 @@ function Battle (kingdomName, enemyName) {
         this.view.createAttackElement(paramsAttackElement);
     };
 
-    this.fight = function (callback) {
+    this.fight = function () {
         let kingdomName = this.kingdom.getName(),
             enemyName = this.enemy.getName(),
             kingdomHealth = this.kingdom.getHealth(),
@@ -56,10 +58,8 @@ function Battle (kingdomName, enemyName) {
                 clearInterval(fight);
                 if (that.enemy.isAlive()) {
                     that.view.createWinnerElement(enemyName, 'winner2');
-                    callback();
                 } else {
                     that.view.createWinnerElement(kingdomName, 'winner1');
-                    callback();
                 }
             }
         }, 1000);
